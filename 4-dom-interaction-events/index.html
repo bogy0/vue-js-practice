@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>VueJS</title>
+	<link rel="stylesheet" href="">
+	<script src="vue.js"></script>
+</head>
+<body>
+	<!--	1. v-on:click adds an click event handler, u can use arguments
+			2. v-on:mousemove.stop - .stop is an event modifier its equal as event.stopPropagation
+			3. vue EVENT MODIFIERS: .stop .prevent .capture .self .once
+			4. in vue there are KEY MODIFIERS: like .enter, it only listens specific keys.
+	-->
+	<div id="app">
+		<button v-on:click="increase(2, $event)">Click</button>
+		<button v-on:click="counter++">Click</button>
+		<p>{{ counter * 2 > 10 ? 'Greater than 10' : 'Smaller than 10' }}</p>
+		<p v-on:mousemove="updateCoordinates">
+			Coordinates: {{ x }} / {{ y }}
+			- <span v-on:mousemove.stop="">DEAD SPOT</span>
+			- asdasdsadddsa
+		</p>
+		<input type="text" v-on:keyup.enter="alertMe"/>
+	</div>
+	<script>
+		new Vue({
+			el: '#app',
+			data: {
+				counter: 0,
+				x: 0,
+				y: 0
+			},
+			methods: {
+				increase: function(step, event) {
+					this.counter += step;
+					console.log(event);
+				},
+				updateCoordinates: function(e) {
+					this.x = e.clientX;
+					this.y = e.clientY;
+				},
+				dummy: function(e) {
+					e.stopPropagation();
+				},
+				alertMe: function() {
+					alert('Alert!');
+				}
+			}
+		})
+	</script>
+</body>
+</html>
